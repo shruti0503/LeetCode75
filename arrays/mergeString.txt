@@ -1,0 +1,24 @@
+The function then enters a loop that continues until both input strings have been fully traversed. 
+In each iteration of the loop, the function checks if there are still characters in word1 that have not been added to result, and if so, it adds the next character to result and increments i. 
+It then checks if there are still characters in word2 that have not been added to result, and if so, it adds the next character to result and increments j.
+
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        int m = word1.size();
+        int n = word2.size();
+        string result = "";
+        int i = 0, j = 0;
+
+        while (i < m || j < n) {
+            if (i < m) {
+                result.push_back(word1[i++]);
+            }
+            if (j < n) {
+                result.push_back(word2[j++]);
+            }
+        }
+
+        return result;
+    }
+};
