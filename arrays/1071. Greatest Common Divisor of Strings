@@ -1,0 +1,25 @@
+The function first checks if the concatenation of str1 and str2 is equal to the concatenation of str2 and str1. 
+If this condition is true, it means that both strings share a common prefix, which could be the greatest common divisor. 
+In this case, the function returns a substring of str1 that starts at index 0 and has a length equal to the greatest common divisor of the lengths of str1 and str2.
+
+This is a C++ function named gcdOfStrings that takes two strings str1 and str2 as input and returns the greatest common divisor of the two strings. 
+The function uses the fact that the greatest common divisor of two strings is a prefix of both strings.
+
+The function first checks if the concatenation of str1 and str2 is equal to the concatenation of str2 and str1.
+If this condition is true, it means that both strings share a common prefix, which could be the greatest common divisor. 
+In this case, the function returns a substring of str1 that starts at index 0 and has a length equal to the greatest common divisor of the lengths of str1 and str2.
+
+If the above condition is not true, it means that there is no common prefix between str1 and str2, so the function returns an empty string.
+
+The function uses the substr method of the string class to extract a substring from str1.
+The substr method takes two arguments: the starting index of the substring and the length of the substring.
+In this case, the starting index is 0 and the length is calculated using the gcd function, which takes the lengths of str1 and str2 as input and returns their greatest common divisor.
+
+For example, if str1 = "abab" and str2 = "ab", the function would return the string "ab", which is the greatest common divisor of the two input strings.
+
+ string gcdOfStrings(string str1, string str2) {
+        if(str1 + str2 == str2 + str1){
+            return str1.substr(0, gcd(str1.length(), str2.length()));
+        }
+        return "";
+    }
