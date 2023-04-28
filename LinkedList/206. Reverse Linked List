@@ -1,0 +1,53 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+// The line ListNode* rev = reverseList(head->next); recursively calls the reverseList function with the second node of the list (head->next) as the new head of the list. This recursive call reverses the rest of the list after the second node, 
+// i.e., the sublist starting from head->next->next. 
+// The return value of the recursive call is then stored in the rev variable.
+
+// Once the recursive call returns, the first node (i.e., head) is linked to the end of the reversed sublist by setting head->next->next = head.
+//  This makes the first node the new last node of the reversed list.
+//  Finally, the next pointer of the first node is set to NULL to complete the reversal.
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(!head || !head->next) return head;
+        ListNode* rev=reverseList(head->next);
+        head->next->next=head;
+        head->next=NULL;
+        return rev;
+        
+        
+    }
+};
+
+//The space complexity of the function is O(n), where n is the number of nodes in the linked list.
+//This is because the function uses the call stack to store the recursive function calls, and each recursive call adds a new frame to the call stack. 
+//In the worst case, the depth of the call stack will be equal to the number of nodes in the linked list, which gives a space complexity of O(n).
+
+//However, the space complexity of the algorithm can be reduced to O(1) by using an iterative approach instead of a recursive approach. 
+//In the iterative approach, we can use two pointers to traverse the list and reverse the nodes in place without using any extra space. 
+//This would give us both O(1) space complexity and O(n) time complexity.
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+    ListNode* prev = nullptr;
+    ListNode* curr = head;
+    while (curr != nullptr) {
+        ListNode* next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
+}
+
+};
