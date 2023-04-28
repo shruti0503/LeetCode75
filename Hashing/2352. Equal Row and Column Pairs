@@ -1,0 +1,66 @@
+class Solution {
+public:
+// This code iterates through each row and column pair and checks if they are equal by comparing their elements.
+//  The time complexity of this approach is O(n^3) because we are iterating through each row, column, and element.
+    int equalPairs(vector<vector<int>>& grid) {
+         int n = grid.size();
+    int count = 0;
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            vector<int> row = grid[i];
+            vector<int> col(n);
+            for(int k = 0; k < n; k++) {
+                col[k] = grid[k][j];
+            }
+            if(row == col) {
+                count++;
+            }
+// vector<int> row = grid[i]; creates a new vector row that is a copy of the i-th row of the grid.
+// vector<int> col(n); creates a new vector col of size n with all elements initialized to 0.
+// for(int k = 0; k < n; k++) { col[k] = grid[k][j]; } fills the col vector with the elements of the j-th column of the grid.
+// if(row == col) { count++; } checks if the row vector is equal to the col vector. If they are equal, then the corresponding row and column contain the same elements in the same order, so we increment the count variable.
+        }
+    }
+    return count;
+    }
+};
+
+//The solution uses a map to count the frequency of each row in the grid.
+//Then, it iterates over each column and creates a vector of elements from that column.
+//The code checks if this vector of column elements is present in the map, and if so, it adds the frequency of that row to the count of equal pairs.
+//Finally, the function returns the count of equal pairs.
+
+class Solution {
+public:
+    int equalPairs(vector<vector<int>>& grid) {
+        map<vector<int>,int>mp;
+        for(int i=0;i<grid.size();i++)
+            mp[grid[i]]++;
+        
+        int col=0;
+        int cnt=0;
+        while(col<grid[0].size()){
+            vector<int>colvec;
+            for(int row=0;row<grid.size();row++){
+                colvec.push_back(grid[row][col]);
+            }
+            if(mp[colvec]){
+                cnt+=mp[colvec];
+            }
+            col++;
+        }
+        return cnt;
+    }
+};
+
+//The time complexity of the equalPairs function is O(n^2 log n), where n is the number of elements in the input grid.
+
+//The reasoning behind this is as follows:
+
+//In the first for loop, we iterate over all the elements of the input grid, so this takes O(n) time.
+//Inside this loop, we insert each row of the grid as a key in a map, which takes O(log n) time for each insertion. 
+//Since we do this n times, the total time complexity of this loop is O(n log n).
+//In the while loop, we iterate over all the columns of the grid, so this takes O(n) time.
+//For each column, we create a vector of its elements, which takes O(n) time.
+//We then check if this vector exists in the map, which takes O(log n) time on average. 
+//Since we do this n times, the total time complexity of this loop is O(n log n).
