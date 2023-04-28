@@ -1,0 +1,68 @@
+//BRUTE FORCE
+
+ListNode* deleteMiddle(ListNode* head) {
+    int count = 0;
+    ListNode* temp = head;
+    while (temp != NULL) { // Count the number of nodes
+        count++;
+        temp = temp->next;
+    }
+    if (count <= 2) { // Handle edge cases
+        if (count == 2) {
+            delete head->next;
+            head->next = NULL;
+        }
+        return head;
+    }
+    int middleIndex = count / 2 + 1;
+    temp = head;
+    ListNode* prev = NULL;
+    while (middleIndex > 1) { // Traverse to middle node
+        prev = temp;
+        temp = temp->next;
+        middleIndex--;
+    }
+    prev->next = temp->next; // Remove middle node
+    delete temp;
+    return head;
+}
+
+//OPTIMISED
+
+//The intuition behind using a slow and fast pointer is to find the middle node of a linked list efficiently.
+
+//If we want to find the middle node of a linked list, we can traverse the list from the head node and count the number of nodes in the list. 
+//Then, we can traverse the list again to find the middle node by starting from the head and moving forward half the number of nodes. 
+//This approach requires two traversals of the list and is not very efficient.
+
+//Instead, we can use the slow and fast pointer approach to find the middle node in a single traversal. 
+//We start with two pointers, slow and fast, both starting from the head node.
+//The slow pointer moves one step at a time, while the fast pointer moves two steps at a time.
+
+//As fast moves twice as fast as slow, it will reach the end of the list twice as quickly as slow.
+//When fast reaches the end of the list, slow will be at the middle node, since it has moved half the distance that fast has moved.
+
+//This approach is efficient and requires only one traversal of the list. 
+//It is also useful in other linked list problems, such as detecting a loop in a linked list.
+ // edge case conditions
+ 
+       if (head == NULL) {
+          return NULL;
+       }
+       if (head->next == NULL) {
+          delete head;
+          return NULL;
+       }
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* prev = head; // keeping this prev node to get the previous node of slow pointer when we reach middle
+        while(fast != NULL && fast->next != NULL)
+        {
+            if(slow != head) prev = prev->next; // since we want prev to start one step later than slow node
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        prev->next = slow->next;
+        delete slow;
+        return head;
+
