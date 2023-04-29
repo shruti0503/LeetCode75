@@ -1,0 +1,44 @@
+class Solution {
+public:
+// Initialize the arr vector to all 1's: arr = [1,1,1,1].
+
+// Calculate the product of all the elements to the left of each element:
+
+// For the first element (1), there are no elements to its left, so its product is 1.
+// For the second element (2), the product of the elements to its left is 1.
+// For the third element (3), the product of the elements to its left is 1*2 = 2.
+// For the fourth element (4), the product of the elements to its left is 123 = 6.
+// Store these products in the arr vector: arr = [1,1*1,2*1,6*1] = [1,1,2,6].
+
+// Calculate the product of all the elements to the right of each element:
+
+// For the fourth element (4), there are no elements to its right, so its product is 1.
+// For the third element (3), the product of the elements to its right is 4.
+// For the second element (2), the product of the elements to its right is 4*3 = 12.
+// For the first element (1), the product of the elements to its right is 432 = 24.
+// Multiply the products from steps 2 and 3 to get the final result: arr = [1*24, 1*12, 2*4, 6*1] = [24,12,8,6].
+
+// Return the arr vector as the output: [24,12,8,6].
+
+// Therefore, the output of the algorithm on the input nums = [1,2,3,4] is [24,12,8,6].
+    vector<int> productExceptSelf(vector<int>& nums) {
+        vector<int> arr(nums.size(), 1);
+        int n = nums.size();
+        
+        // calculate the product of all the elements to the left of each element
+        int left = 1;
+        for (int i = 1; i < n; i++) {
+            left *= nums[i-1];
+            arr[i] *= left;
+        }
+        
+        // calculate the product of all the elements to the right of each element
+        int right = 1;
+        for (int i = n-2; i >= 0; i--) {
+            right *= nums[i+1];
+            arr[i] *= right;
+        }
+        
+        return arr;
+    }
+};
