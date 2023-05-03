@@ -1,0 +1,48 @@
+class Solution {
+    //brute force app to the problem would we to check for every char in t if present return true.
+    //o(n*n)
+public:
+// If you want to preserve the relative ordering of the characters in s while checking
+//  if s is a subsequence of t, you can use two pointers to keep track of the positions of the characters in s and t.
+//   The idea is to iterate through t and check if the current character in t matches the current character in s.
+//    If there is a match, we move both pointers to the next characters in s and t.
+//     If there is no match, we move only the pointer in t. 
+//     If we reach the end of s, it means that s is a subsequence of t.
+
+    bool isSubsequence(string s, string t) {
+       int i = 0, j = 0;
+    while (i < s.size() && j < t.size()) {
+        if (s[i] == t[j]) {
+            i++;
+        }
+        j++;
+    }
+    return i == s.size();
+    }
+};
+
+Follow up: Suppose there are lots of incoming s, say s1, s2, ..., sk where k >= 109,
+and you want to check one by one to see if t has its subsequence. In this scenario, how would you change your code?
+
+If you have to check if t has a subsequence among a large number of strings s1, s2, ..., sk, 
+you can preprocess t to build an index of the positions of each character in t.
+Then, for each s that you want to check, you can use the index to quickly check if s is a subsequence of t.
+
+Here's how you can modify the isSubsequence function to build the index:
+
+bool isSubsequence(string s, string t, unordered_map<char, vector<int>>& index) {
+    int pos = -1;
+    for (char c : s) {
+        if (index.count(c)) {
+            vector<int>& positions = index[c];
+            auto it = upper_bound(positions.begin(), positions.end(), pos);
+            if (it == positions.end()) {
+                return false;
+            }
+            pos = *it;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
