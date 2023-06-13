@@ -1,0 +1,39 @@
+class Solution {
+public:
+// Initialize an empty string s to store the compressed characters.
+// Initialize a variable count to keep track of the count of consecutive repeating characters. Set it to 1.
+// Iterate through the chars array from index 1 to the end:
+// If the current character is equal to the previous character, increment the count variable.
+// If the current character is different from the previous character:
+// Append the previous character to s.
+// If count is greater than 1, append the string representation of count to s.
+// Reset count to 1.
+// Append the last character and count to s.
+// Convert the characters of s into a character array and copy it back to the chars array.
+// Return the length of the compressed array.
+    int compress(vector<char>& chars) {
+        string s;
+        int count = 1;
+
+        for (int i = 1; i < chars.size(); i++) {
+            if (chars[i] == chars[i - 1]) {
+                count++;
+            } else {
+                s.push_back(chars[i - 1]);
+                if (count > 1) {
+                    s += to_string(count);
+                }
+                count = 1;
+            }
+        }
+
+        s.push_back(chars.back());
+        if (count > 1) {
+            s += to_string(count);
+        }
+
+        copy(s.begin(), s.end(), chars.begin());
+
+        return s.size();
+    }
+};
